@@ -6,6 +6,8 @@ server <- function(session, input, output){
     frequencies_filtered = data.table::data.table()
   )
   
+  print("hello")
+  
   # observeEvent doesn;t need to be assigned to a variable - it starts a 'listening' function
   # so it will watch if input$go changes and do something if it did change
   
