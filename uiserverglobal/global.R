@@ -1,4 +1,10 @@
-setwd("C:/Users/A   S    U    S/Desktop/shiny/maryam_shiny/uiserverglobal")
+# Don't hardcode this - a good one is the following command:
+library(rstudioapi)    
+# script_path = rstudioapi::getActiveDocumentContext()$path
+# script_dir = dirname(script_path)
+# setwd(script_dir)
+#setwd("C:/Users/A   S    U    S/Desktop/shiny/maryam_shiny/uiserverglobal")
+
 library(shiny)
 library(RISmed)
 library(dplyr)
@@ -67,7 +73,6 @@ getWordFrequency <- function(abstractsx){
   return(CorpusofMyCloudx)
 }
 
-frequencies <- getWordFrequency(getAbstracts("l carnitine"))
 # frequencies <- getWordFrequency(abstractsx)#? or abstracts# why is it problem???????????????????
 #filterList are medicalwords
 #filterWords are summerized and uniqued of filterList
@@ -78,36 +83,13 @@ getFilteredWordFreqency <- function(frequencies, filterList){
   return(filteredWords)
 }
 
-getFilteredWordFreqency<-getFilteredWordFreqency(frequencies, filterList)# maybe can be deleted
-
-
 filter_storage <- list(
   medical = filterList,
-  numbers = data.table(word = 1:100),
-  stopwords = tidytext::stop_words
+  stopwords = tidytext::stop_words,
+  metabolomics = data.table::data.table(word=c("metabolism", "metabolic", 
+                                               "metabolomic", "metabolomics",
+                                               "biochemical", "mass", "spectrometry", 
+                                               "nmr", "direct", "infusion"))
 )
 
-#filter_storage[["medical"]]
-#filter_storage[["numbers"]]
-#filter_storage[["stopwords"]]
-
-
-#Joanna
-#if you want the medical words
-filter_you_want = "medical"
-filter_storage[[filter_you_want]]
-
-for(filterName in c("medical", "numbers","stopwords")){
-  words2remove = filter_storage[[filterName]]
-  print(head(words2remove))
-}
-
-# PUT THIS IN SERVER!
-#... stuff to get frequencies
-
-filtered <- frequencies
-for(filterName in input$filter){
-  # filterList <- .....
-  filtered <- getFilteredWordFreqency(filtered, filterList)
-}
 
